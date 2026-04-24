@@ -21,20 +21,20 @@
 
 <div class="post">
 
-    <!-- HEADER (avatar + username) -->
+    <!-- HEADER -->
     <div style="display:flex; align-items:center; gap:15px;">
 
-        <div>
-        {% if posts and posts[0][5] %}
+        {% if post[5] %}
             <img class="avatar"
-                 src="{{ url_for('static', filename='avatars/' + posts[0][5]) }}">
+                 src="{{ url_for('static', filename='avatars/' + post[5]) }}">
         {% else %}
             <img class="avatar"
                  src="{{ url_for('static', filename='avatars/default.png') }}">
         {% endif %}
-        </div>
 
-        <h2>{{ username }}</h2>
+        <a class="username" href="/user/{{ post[1] }}">
+            {{ post[1] }}
+        </a>
 
     </div>
 
@@ -51,19 +51,13 @@
     <!-- ACTIONS -->
     <div class="actions">
 
-        <!-- 👍 -->
-        <button onclick="react({{ post[0] }}, 'thumb')">
-            👍
-        </button>
-        <span id="thumbs-{{ post[0] }}">{{ post[6] }}</span>
+        👍 <span id="thumbs-{{ post[0] }}">{{ post[6] }}</span>
 
-        <!-- ❤️ -->
-        <button onclick="react({{ post[0] }}, 'heart')">
-            ❤️
-        </button>
-        <span id="hearts-{{ post[0] }}">{{ post[7] }}</span>
+        ❤️ <span id="hearts-{{ post[0] }}">{{ post[7] }}</span>
 
-        <!-- DELETE -->
+        <button onclick="react({{ post[0] }}, 'thumb')">👍</button>
+        <button onclick="react({{ post[0] }}, 'heart')">❤️</button>
+
         {% if session.get("user") == post[1] %}
         <form method="POST" action="/delete/{{ post[0] }}" style="display:inline;">
             <button style="border:none; background:none; cursor:pointer;">
@@ -99,12 +93,9 @@
 
 </div>
 
-<!-- JS -->
 <script>
 function react(postId, type) {
-    fetch("/react/" + postId + "/" + type, {
-        method: "POST"
-    })
+    fetch("/react/" + postId + "/" + type, { method: "POST" })
     .then(res => {
         if (res.status === 403) {
             window.location.href = "/login";
@@ -114,7 +105,6 @@ function react(postId, type) {
     })
     .then(data => {
         if (!data) return;
-
         document.getElementById("thumbs-" + postId).innerText = data.thumb;
         document.getElementById("hearts-" + postId).innerText = data.heart;
     });
@@ -130,9 +120,7 @@ function addComment(event, postId) {
 
     fetch("/comment/" + postId, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: "content=" + encodeURIComponent(content)
     })
     .then(res => {
@@ -146,8 +134,8 @@ function addComment(event, postId) {
         if (!data) return;
 
         let container = document.getElementById("comments-" + postId);
-
         let newComment = document.createElement("p");
+
         newComment.innerHTML =
             "<strong>" + data.username + "</strong> : " + data.content;
 

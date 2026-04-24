@@ -1,15 +1,9 @@
+/* GLOBAL */
 body {
     font-family: Arial, sans-serif;
     background: #f5f5f5;
     margin: 0;
     font-size: 16px;
-}
-
-textarea {
-    width: 100%;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid #ccc;
 }
 
 /* NAVBAR */
@@ -19,6 +13,7 @@ nav {
     border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* CONTAINER */
@@ -28,26 +23,26 @@ nav {
     margin: 30px auto;
 }
 
-/* USER */
-.username {
-    font-weight: bold;
-    font-size: 16px;
-    color: #007bff;
-    text-decoration: none;
-}
-
 /* POST CARD */
 .post {
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+/* HEADER USER */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* USERNAME */
 .username {
     font-weight: bold;
+    font-size: 15px;
     color: #007bff;
     text-decoration: none;
 }
@@ -64,59 +59,60 @@ nav {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 10px;
 }
 
-/* LIKE BUTTON */
-.like-btn {
+/* BUTTON */
+button {
     border: none;
     background: #eee;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    border-radius: 20px;
+    padding: 5px 10px;
     cursor: pointer;
-}
-
-/* COMMENT INPUT */
-.comment-input {
-    width: 80%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-#comments p {
-    font-size: 14px;
-    margin: 5px 0;
-}
-
-/* PUBLICATION IMG */
-.post img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 10px;
-    display: block;
-}
-
-.post {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 button:hover {
     opacity: 0.7;
 }
 
+/* AVATAR */
 .avatar {
-    width: 50px !important;
-    height: 50px !important;
+    width: 50px;
+    height: 50px;
     min-width: 50px;
     min-height: 50px;
     border-radius: 50%;
     object-fit: cover;
     display: block;
+}
+
+/* POST IMAGE */
+.post img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* TEXTAREA */
+textarea {
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* COMMENT INPUT */
+.comment-input {
+    width: 80%;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* COMMENTS */
+#comments p {
+    font-size: 14px;
+    margin: 5px 0;
 }

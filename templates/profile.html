@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container">
+
     <div style="display:flex; align-items:center; gap:15px;">
         {% if posts and posts[0][5] %}
             <img class="avatar"
@@ -11,19 +13,27 @@
         {% endif %}
         <h2>{{ username }}</h2>
     </div>
+
     <hr>
+
     {% for post in posts %}
         <div class="post">
+
             <div class="content">
                 {{ post[2] }}
             </div>
+
             {% if post[4] %}
                 <img src="{{ url_for('static', filename='uploads/' + post[4]) }}">
             {% endif %}
+
             <div class="actions">
                 👍 {{ post[6] }} | ❤️ {{ post[7] }}
             </div>
+
         </div>
     {% endfor %}
+
 </div>
+
 {% endblock %}
