@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+
+<h2>Accueil</h2>
+
+{% if session.get("user") %}
+<form method="POST" action="/post" enctype="multipart/form-data">
+    <textarea name="content" placeholder="Exprime-toi..." required></textarea>
+    <br><br>
+    <input type="file" name="image">
+    <br><br>
+    <button type="submit">Publier</button>
+</form>
+{% endif %}
+
+<hr>
+
+{% for post in posts %}
+
+<div class="post">
+
+    <!-- HEADER (avatar + username) -->
+    <div style="display:flex; align-items:center; gap:15px;">
+
+        <div>
+        {% if posts and posts[0][5] %}
+            <img class="avatar"
+                 src="{{ url_for('static', filename='avatars/' + posts[0][5]) }}">
+        {% else %}
+            <img class="avatar"
+                 src="{{ url_for('static', filename='avatars/default.png') }}">
+        {% endif %}
+        </div>
+
+        <h2>{{ username }}</h2>
+
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+        {{ post[2] }}
+    </div>
+
+    <!-- IMAGE -->
+    {% if post[4] %}
+        <img src="{{ url_for('static', filename='uploads/' + post[4]) }}">
+    {% endif %}
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+        <!-- 👍 -->
+        <button onclick="react({{ post[0] }}, 'thumb')">
+            👍
+        </button>
+        <span id="thumbs-{{ post[0] }}">{{ post[6] }}</span>
+
+        <!-- ❤️ -->
+        <button onclick="react({{ post[0] }}, 'heart')">
+            ❤️
+        </button>
+        <span id="hearts-{{ post[0] }}">{{ post[7] }}</span>
+
+        <!-- DELETE -->
+        {% if session.get("user") == post[1] %}
+        <form method="POST" action="/delete/{{ post[0] }}" style="display:inline;">
+            <button style="border:none; background:none; cursor:pointer;">
+                🗑️
+            </button>
+        </form>
+        {% endif %}
+
+    </div>
+
+    <!-- COMMENTS -->
+    <div id="comments-{{ post[0] }}">
+        {% for c in comments %}
+            {% if c[1] == post[0] %}
+                <p><strong>{{ c[2] }}</strong> {{ c[3] }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- ADD COMMENT -->
+    {% if session.get("user") %}
+    <form onsubmit="addComment(event, {{ post[0] }})">
+        <input class="comment-input"
+               id="comment-input-{{ post[0] }}"
+               placeholder="Commenter..." required>
+        <button type="submit">➤</button>
+    </form>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- JS -->
+<script>
+function react(postId, type) {
+    fetch("/react/" + postId + "/" + type, {
+        method: "POST"
+    })
+    .then(res => {
+        if (res.status === 403) {
+            window.location.href = "/login";
+            return;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (!data) return;
+
+        document.getElementById("thumbs-" + postId).innerText = data.thumb;
+        document.getElementById("hearts-" + postId).innerText = data.heart;
+    });
+}
+</script>
+
+<script>
+function addComment(event, postId) {
+    event.preventDefault();
+
+    let input = document.getElementById("comment-input-" + postId);
+    let content = input.value;
+
+    fetch("/comment/" + postId, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "content=" + encodeURIComponent(content)
+    })
+    .then(res => {
+        if (res.status === 403) {
+            window.location.href = "/login";
+            return;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (!data) return;
+
+        let container = document.getElementById("comments-" + postId);
+
+        let newComment = document.createElement("p");
+        newComment.innerHTML =
+            "<strong>" + data.username + "</strong> : " + data.content;
+
+        container.appendChild(newComment);
+        input.value = "";
+    });
+}
+</script>
+
+{% endblock %}

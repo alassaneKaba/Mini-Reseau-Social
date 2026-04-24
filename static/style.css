@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    font-size: 16px;
+}
+
+textarea {
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* NAVBAR */
+nav {
+    background: white;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* CONTAINER */
+.container {
+    width: 600px;
+    max-width: 90%;
+    margin: 30px auto;
+}
+
+/* USER */
+.username {
+    font-weight: bold;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* POST CARD */
+.post {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* USERNAME */
+.username {
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* CONTENT */
+.content {
+    margin: 10px 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+/* ACTIONS */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* LIKE BUTTON */
+.like-btn {
+    border: none;
+    background: #eee;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+/* COMMENT INPUT */
+.comment-input {
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#comments p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+/* PUBLICATION IMG */
+.post img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+.post {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+button:hover {
+    opacity: 0.7;
+}
+
+.avatar {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}

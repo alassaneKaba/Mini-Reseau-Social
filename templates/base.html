@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Mini Réseau Social</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Accueil</a>
+        {% if session.get("user") %}
+            <span>Connecté en tant que {{ session["user"] }}</span>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Inscription</a>
+        {% endif %}
+        <a href="/notifications">🔔</a>
+    </nav>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
